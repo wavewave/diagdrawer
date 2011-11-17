@@ -1,6 +1,6 @@
 module Application.DiagramDrawer.Command where
 
-import Application.DiagramDrawer.Type
+import Application.DiagramDrawer.ProgType
 import Application.DiagramDrawer.Job
 
 commandLineProcess :: Diagdrawer -> IO ()

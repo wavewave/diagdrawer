@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
-module Application.DiagramDrawer.Type where 
+module Application.DiagramDrawer.ProgType where 
 
 import System.Console.CmdArgs
 
