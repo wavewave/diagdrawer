@@ -16,7 +16,7 @@ startGUI = do
   window <- windowNew 
   hbox <- hBoxNew False 0 
   vbox <- vBoxNew False 0 
-  canvas <- drawingAreaNew 
+  cvs <- drawingAreaNew 
   buttonClear <- buttonNewWithLabel "Clear"
   buttonLine  <- buttonNewWithLabel "Line"
   buttonArc   <- buttonNewWithLabel "Arc"
@@ -26,11 +26,11 @@ startGUI = do
   boxPackStart hbox buttonLine  PackGrow 0 
   boxPackStart hbox buttonArc   PackGrow 0 
   boxPackStart hbox buttonPoint PackGrow 0 
-  boxPackStart vbox canvas      PackGrow 0 
+  boxPackStart vbox cvs      PackGrow 0 
   boxPackStart vbox hbox        PackNatural 0 
-  canvas `on` sizeRequest $ return (Requisition 400 300)
+  cvs `on` sizeRequest $ return (Requisition 400 300)
 
-  let st = emptyDiagramState
+  let st = emptyDiagramState { canvas = cvs }
   (r,st') <- runStateT (resume iter) st
   sref <- newIORef st'
   tref <- case r of 
@@ -40,8 +40,13 @@ startGUI = do
 
   buttonClear `on` buttonPressEvent $ tryEvent $ do 
     liftIO $ bouncecallback tref sref ButtonClear
-    -- liftIO $ putStrLn "Clear clicked"
-  {-
+ 
+  cvs `on` buttonPressEvent $ tryEvent $ do 
+    (x,y) <- eventCoordinates 
+    liftIO $ bouncecallback tref sref (CanvasClick (x,y))
+ 
+
+ {-
   canvas `on` motionNotifyEvent $ tryEvent $ do 
     (x,y) <- eventCoordinates
     liftIO $ putStrLn $ show (x,y)
@@ -53,7 +58,7 @@ startGUI = do
     liftIO $ putStrLn $ "button pressed at " ++ show (x,y)
   -}
 
-  widgetAddEvents canvas [PointerMotionMask,Button1MotionMask] 
+  widgetAddEvents cvs [PointerMotionMask,Button1MotionMask] 
 
   widgetShowAll window 
   onDestroy window mainQuit 
