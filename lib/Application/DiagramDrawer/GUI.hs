@@ -67,7 +67,8 @@ startGUI = do
   boxPackStart hbox buttonLine  PackGrow 0 
   boxPackStart hbox buttonArc   PackGrow 0 
   boxPackStart hbox buttonPoint PackGrow 0 
-  boxPackStart vbox canvas      PackGrow 0 
+  boxPackStart vbox menubar     PackNatural 0 
+  boxPackStart vbox cvs      PackGrow 0 
   boxPackStart vbox hbox        PackNatural 0 
   cvs `on` sizeRequest $ return (Requisition 400 300)
 

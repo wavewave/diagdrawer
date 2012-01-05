@@ -26,12 +26,20 @@ Library
   ghc-prof-options: -caf-all -auto-all
   Build-Depends: 
                    base>4, mtl>2, directory, filepath,
-                   cmdargs, gtk
+                   cmdargs, gtk, transformers, monad-coroutine,
+                   template-haskell,  cairo
   Exposed-Modules: 
                    Application.DiagramDrawer.ProgType
                    Application.DiagramDrawer.Job
                    Application.DiagramDrawer.Command
                    Application.DiagramDrawer.GUI
+                   Application.DiagramDrawer.Coroutine
+                   Application.DiagramDrawer.Type 
+                   Application.DiagramDrawer.Iteratee
+                   Application.DiagramDrawer.Draw
+--                   Application.DiagramDrawer.Type
+--                   Application.DiagramDrawer.Coroutine
+                   Application.DiagramDrawer.Verbatim
   Other-Modules: 
 
  
